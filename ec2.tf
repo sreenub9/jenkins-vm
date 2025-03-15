@@ -20,10 +20,10 @@ filter {
 resource "aws_default_vpc" "default" { }
 
 
-resource "aws_key_pair" "myvm-key" {
-  key_name = "myvm-key"
-  public_key = file("../../../../.ssh/id_rsa.pub")
-}
+#resource "aws_key_pair" "myvm-key" {
+#  key_name = "myvm-key"
+#  public_key = file("../../../../.ssh/id_rsa.pub")
+#}
 
 
 resource "aws_security_group" "myvm-sg" {
@@ -71,9 +71,9 @@ egress {
 
 resource "aws_instance" "rocky-vm-test" {
   ami             = data.aws_ami.os_image.id
-  key_name        = aws_key_pair.myvm-key.key_name
+  #key_name        = aws_key_pair.myvm-key.key_name
   security_groups = [aws_security_group.myvm-sg.name]
-  instance_type   = "t2.micro"
+  instance_type   = "t3.medium"
 
   root_block_device {
     volume_size = 15
