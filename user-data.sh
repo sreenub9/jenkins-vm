@@ -15,3 +15,14 @@ sudo mkfs.ext4 /dev/xvdb  # Format disk with ext4
 sudo mkdir -p /mnt/extradisk  # Create mount point
 sudo mount /dev/xvdb /mnt/extradisk  # Mount disk
 echo '/dev/xvdb /mnt/extradisk ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab  # Persist mount
+
+
+# Install Terraform
+sudo apt install -y gnupg software-properties-common curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update -y
+sudo apt install -y terraform
+
+# Verify Terraform installation
+terraform -version
