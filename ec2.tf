@@ -81,4 +81,21 @@ resource "aws_instance" "rocky-vm-test" {
   }
 
   user_data = file("user-data.sh")
+  tags = {
+    Name = "jenkins-server"
+  }
+
+}
+
+
+resource "aws_ebs_volume" "extra_disk" {
+  availability_zone = aws_instance.rocky-vm-test.availability_zone
+  size             = 10  # Set the size in GB
+  type             = "gp3"
+}
+
+resource "aws_volume_attachment" "extra_disk_attachment" {
+  device_name = "/dev/xvdb"
+  volume_id   = aws_ebs_volume.extra_disk.id
+  instance_id = aws_instance.rocky-vm-test.id
 }
